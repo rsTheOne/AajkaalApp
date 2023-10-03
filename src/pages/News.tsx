@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createRef, useRef } from "react";
-import { IonPage, IonHeader, IonActionSheet, IonAvatar, IonCard, IonCardContent, IonCardHeader, IonChip, IonContent, IonIcon, IonLabel, IonList, IonItem, IonText, IonButton, IonModal, IonToolbar, IonButtons, IonTitle, IonInput } from '@ionic/react';
+import { IonPage, IonHeader, IonActionSheet, IonAvatar, IonCard, IonCardContent, IonCardHeader, IonChip, IonContent, IonIcon, IonLabel, IonList, IonItem, IonText, IonButton, IonModal, IonToolbar, IonButtons, IonTitle, IonInput, useIonToast } from '@ionic/react';
 import { Share } from '@capacitor/share';
 
 
@@ -12,10 +12,10 @@ import { caretUpCircle, grid } from "ionicons/icons";
 import RelatedNews from "../components/relatedNews";
 import "animate.css";
 import { OverlayEventDetail } from "@ionic/core";
-import ScrollAnimation from "react-animate-on-scroll";
 
 
 const News: React.FC = () => {
+  const [present] = useIonToast();
   const contentRef = createRef<HTMLIonContentElement>();
   const modal = useRef<HTMLIonModalElement>(null);
   const nameinput = useRef<HTMLIonInputElement>(null);
@@ -23,7 +23,7 @@ const News: React.FC = () => {
   const orginput = useRef<HTMLIonInputElement>(null);
   const issueinput = useRef<HTMLIonInputElement>(null);
   const [message, setMessage] = useState(
-    'This modal example uses triggers to automatically open a modal when the button is clicked.'
+    'Thank you for your report. It will be resolved ASAP.'
   );
   let token = location.href.split('/')[4];
   const renderHTML = (rawHTML: string) => React.createElement("p", { dangerouslySetInnerHTML: { __html: rawHTML } });
@@ -41,6 +41,13 @@ const News: React.FC = () => {
       console.log(error);
     }
   }
+  const presentToast = () => {
+    present({
+      message: 'Thank you for your report. We will look into it.',
+      duration: 3000,
+      position: 'bottom',
+    });
+  };
   const takeACtion = (result: OverlayEventDetail) => {
     if (result.data.action == "report") {
       setReportModelIsOpen(true);
@@ -138,7 +145,7 @@ const News: React.FC = () => {
                 <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
               </IonButtons>
               <IonButtons slot="end">
-                <IonButton strong={true} onClick={() => confirm()}>
+                <IonButton strong={true} onClick={() => presentToast()}>
                   Submit
                 </IonButton>
               </IonButtons>

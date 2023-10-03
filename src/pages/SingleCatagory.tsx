@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createRef } from "react";
-import { IonContent, IonHeader, IonPage, IonGrid, IonRow, IonCol, IonIcon, IonButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonGrid, IonRow, IonCol, IonIcon, IonButton, IonTitle } from '@ionic/react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Autoplay, Pagination} from 'swiper/modules';
 import BasicCard from '../components/basicCard';
@@ -22,9 +22,11 @@ const SingleCatagory: React.FC = () => {
   let token = location.href.split('/')[4];
   let CATAINFO: string = `https://aajkaal.live/api/cata_info.php?id=${token}`;
   let CATANEWS: string = `https://aajkaal.live/api/cata_news.php?id=${token}`;
+  let CATANEWSPAST: string = `https://aajkaal.live/api/cata_news.php?from=past&id=${token}`;
   let CATAHEADLINE: string = `https://aajkaal.live/api/headlines.php?id=${token}`;
   const [cataInfoWOStyle, setCataInfoWOStyle] = useState<[number, string, string, string, string]>([1, "বিশেষ খবর", "", "বিশেষ বিশেষ খবর একনজরে", ""]);
   const [cataNewsWOStyle, setCataNewsWOStyle] = useState([1, "", "", "", ""]);
+  const [cataNewsWOStylePast, setCataNewsWOStylePast] = useState([1, "", "", "", ""]);
   const [cataLineWOStyle, setCataLineWOStyle] = useState([["বিশেষ বিশেষ খবর একনজরে"]]);
   const fetchApi = async (url: string) => {
     try {
@@ -45,6 +47,11 @@ const SingleCatagory: React.FC = () => {
   useEffect(() => {
     fetchApi(CATANEWS).then((value) => {
       setCataNewsWOStyle(value);
+    })
+  }, []);
+  useEffect(() => {
+    fetchApi(CATANEWSPAST).then((value) => {
+      setCataNewsWOStylePast(value);
     })
   }, []);
   useEffect(() => {
@@ -115,6 +122,21 @@ const SingleCatagory: React.FC = () => {
             news[2] == 2 ?
             SmallVideoNews(news[0], news[3], news[1]) :
             SmallIframeNews(news[0], news[3], news[1])
+          }
+          </IonCol>
+      ))}
+        </IonRow>
+      </IonGrid>
+      <IonTitle>আরও কিছু আকর্ষণীয় খবর</IonTitle>
+      <IonGrid>
+        <IonRow>
+      {cataNewsWOStylePast.map((pastnews: any, j) => (
+        <IonCol size="6" key={j}>
+            {pastnews[2] == 1 ?
+            SmallImgNews(pastnews[0], pastnews[3], pastnews[1], pastnews[1]) :
+            pastnews[2] == 2 ?
+            SmallVideoNews(pastnews[0], pastnews[3], pastnews[1]) :
+            SmallIframeNews(pastnews[0], pastnews[3], pastnews[1])
           }
           </IonCol>
       ))}

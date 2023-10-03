@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createRef } from "react";
-import { IonContent, IonHeader, IonPage, IonButton, IonGrid, IonRow, IonCol, IonIcon, RefresherEventDetail, IonLabel, IonItem, IonToolbar, IonSegment, IonSegmentButton, IonToast, IonRefresher, IonRefresherContent, IonProgressBar, useIonToast } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonButton, IonGrid, IonRow, IonCol, IonIcon, RefresherEventDetail, IonLabel, IonItem, IonToolbar, IonSegment, IonSegmentButton, IonToast, IonRefresher, IonRefresherContent, IonProgressBar, useIonToast, IonTitle, IonNote } from '@ionic/react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Autoplay, Pagination} from 'swiper/modules';
 import BasicCard from '../components/basicCard';
@@ -30,12 +30,16 @@ const Home: React.FC = () => {
   let BREAKINGAPI: string = "https://aajkaal.live/api/breaking_news.php";
   let NEWSWCATAAPI: string = "https://aajkaal.live/api/landing_news_with_cata.php";
   let NEWSWOCATAAPI: string = "https://aajkaal.live/api/landing_news_wo_cata.php";
+  let BREAKINGAPIPAST: string = "https://aajkaal.live/api/breaking_news.php?from=past";
+  let NEWSWCATAAPIPAST: string = "https://aajkaal.live/api/landing_news_with_cata.php?from=past";
   const [headlineWithStyle, setHeadlineWithStyle] = useState([["বিশেষ বিশেষ খবর একনজরে"]]);
   const [bengDate, setBengDate] = useState("আজকের দিনটি বিশেষ");
   const [live, setLive] = useState([[1, "", "embed", ""]]);
   const [breaking, setBreaking] = useState([[1, "", 1, "", "", "", 1]]);
   const [newsWCata, setNewsWCata] = useState([[[1, "", 1, "", 1, "", ""]]]);
   const [newsWOCata, setNewsWOCata] = useState([[1, "", 1, ""]]);
+  const [breakingPast, setBreakingPast] = useState([[1, "", 1, "", "", "", 1]]);
+  const [newsWCataPast, setNewsWCataPast] = useState([[[1, "", 1, "", 1, "", ""]]]);
   const fetchApiData = async (url: string) => {
     try {
       const res = await fetch(url);
@@ -97,6 +101,16 @@ const Home: React.FC = () => {
       setNewsWOCata(value);
     })
   }, []);
+  useEffect(() => {
+    fetchApiData(BREAKINGAPIPAST).then((value) => {
+      setBreakingPast(value);
+    })
+  }, []);
+  useEffect(() => {
+    fetchApiData(NEWSWCATAAPIPAST).then((value) => {
+      setNewsWCataPast(value);
+    })
+  }, []);
   return (
     <IonPage>
       <IonHeader>
@@ -107,8 +121,8 @@ const Home: React.FC = () => {
           <IonSegmentButton value="all">
             <IonLabel>সমস্ত খবর</IonLabel>
           </IonSegmentButton>
-          <IonSegmentButton value="favorites">
-            <IonLabel onClick={() => presentToast()}>পূজো স্পেশাল
+          <IonSegmentButton value="favorites" onClick={() => presentToast()}>
+            <IonLabel>পূজো স্পেশাল
             </IonLabel>
           </IonSegmentButton>
         </IonSegment>
@@ -231,6 +245,36 @@ const Home: React.FC = () => {
       ))}
       </IonRow>
         </IonGrid>
+        <IonTitle>এক নজরে</IonTitle>
+        <Swiper spaceBetween={30}
+        slidesPerView={2}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        navigation={false}
+        modules={[Autoplay, Pagination]}
+        className="mySwiper">
+          {breakingPast.map((breakPast: any, i) => (
+              <SwiperSlide key={i}>{
+                SmallImgNews(breakPast[0], breakPast[3], breakPast[1], breakPast[1])
+              }</SwiperSlide>
+            ))}
+        </Swiper>
+        {newsWCataPast.map((specialNewsPast: any, l) => (
+        specialNewsPast.map((singleNewsPast: any, p: number) => (
+          p == 0 ?
+          <IonItem key={p}>
+          <IonLabel>আরও কিছু খবর {singleNewsPast[1]}</IonLabel>
+          <IonNote slot="end">...</IonNote>
+          {/* <IonBadge color="success"><IonIcon icon="caretForwardCircleOutline"></IonIcon></IonBadge> */}
+          </IonItem>
+          : CataWiseNews(singleNewsPast)
+        ))
+      ))}
     <IonButton className="scroll__to--top" expand="block" onClick={scrollToTop}><IonIcon area-hidden={true} icon={caretUpCircle}></IonIcon></IonButton>
       </IonContent>
     </IonPage>
