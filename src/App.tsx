@@ -38,6 +38,7 @@ import News from './pages/News';
 import About from './pages/About';
 import Privacy from './pages/Privacy';
 import UserAgreement from './pages/UserAgreement';
+import Pujo from './pages/Pujo';
 
 setupIonicReact();
 
@@ -69,6 +70,9 @@ const App: React.FC = () => (
           </Route>
           <Route path="/useragreement">
             <UserAgreement />
+          </Route>
+          <Route path="/pujo">
+            <Pujo />
           </Route>
           <Route exact path="/">
             <Redirect to="/home" />
