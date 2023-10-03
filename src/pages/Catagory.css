@@ -1,0 +1,26 @@
+.catagory ion-header {
+    text-align: center;
+    color: #000;
+    padding: 12px;
+} .catagory .card-content-md p {
+    font-size: 9px;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    padding-top: 0;
+} .catagory ion-content {
+    overflow: hidden;
+} a {
+    text-decoration: none !important;
+} .news__title--header {
+    color: #000;
+    text-align: center;
+    margin: 6px 12px;
+} .relative__news--ionitem {
+    margin-bottom: 24px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1) !important;
+} .About div {
+    left: 9%;
+    width: 90%;
+    display: block;
+}

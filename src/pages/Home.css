@@ -1,0 +1,52 @@
+.ion-page {
+    background-color: #fff;
+} .swiper-slide .md {
+    color: #000;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+} ion-header {
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1) !important;
+} ion-header ion-col {
+    color: #000;
+    font-size: 12px;
+} .card-content-md p {
+    font-size: 12px;
+    color: #000;
+} ion-card {
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+} ion-content {
+    overflow: hidden;
+} .cata__line--height {
+    line-height: 24px;
+    text-align: center;
+} .scroll__to--top {
+    width: 48px;
+    background-color: transparent;
+    margin-left: 81%;
+} .scroll__to--top button {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+} .scroll__to--top button span {
+    color: #000 !important;
+} .cata__icon--margin {
+    margin-right: 12px;
+} .font__size--9 {
+    font-size: 9px;
+} .font__size--12 {
+    font-size: 12px;
+} .ion-activatable {
+    width: fit-content;
+    width: -moz-fit-content;
+} .news ion-card-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+} .news ion-card-content {
+    text-align: center;
+} .margin__0 {
+    margin: 0;
+} .whole__news {
+    margin: 12px 24px;
+    text-align: justify;
+}
